@@ -10,3 +10,16 @@
 /dataSources.local.xml
 .idea/
 
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/.env
+frontend/.env.*
+!frontend/.env.example
+
+backend/bin/
+backend/*.exe
+backend/.env
+backend/.env.*
+!backend/.env.example
+
