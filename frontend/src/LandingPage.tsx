@@ -1,4 +1,6 @@
-import { Link } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom'
+import { ApplyFormInner } from './App'
 
 type FundingOption = {
   title: string
@@ -112,7 +114,7 @@ function FundingSlide({ option }: { option: FundingOption }) {
           className="team-member-image-two"
         />
         <div className="team-block-info">
-          <h3 className="team-member-name-two">{option.title}</h3>
+          <h3 className="team-member-name-two text-black">{option.title}</h3>
           <p className="team-member-text">
             {option.priceText ? (
               <>
@@ -137,6 +139,18 @@ function FundingSlide({ option }: { option: FundingOption }) {
 }
 
 export default function LandingPage() {
+  const location = useLocation()
+
+  useEffect(() => {
+    if (location.pathname !== '/apply') return
+
+    const t = window.setTimeout(() => {
+      document.getElementById('apply-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }, 50)
+
+    return () => window.clearTimeout(t)
+  }, [location.pathname])
+
   return (
     <div>
       <header
@@ -170,23 +184,25 @@ export default function LandingPage() {
                 <br />
               </div>
               <div className="paragraph-bigger cc-bigger-light">
-                <strong className="bold-text">Global challenges &amp; Sustainable Development</strong>
-                <br />
+                <div className="inline-block rounded-2xl bg-black/60 px-4 py-2 text-white">
+                  <strong className="bold-text text-white">Global challenges &amp; Sustainable Development</strong>
+                </div>
               </div>
               <div className="paragraph-bigger cc-bigger-light">
-                <strong>📍 Tashkent, Uzbekistan - 🗓 May 2026</strong>
-                <br />
+                <div className="inline-block rounded-2xl bg-black/60 px-4 py-2 text-white">
+                  <strong className="text-white">📍 Tashkent, Uzbekistan - 🗓 May 2026</strong>
+                </div>
               </div>
             </div>
-            <Link to="/apply" className="secondary-button w-inline-block">
-              <div>Apply now</div>
+            <Link to="/apply" className="w-inline-block rounded-full bg-black px-8 py-3 text-white">
+              <div className="font-semibold">Apply now</div>
             </Link>
           </div>
         </section>
 
         <section className="container">
           <div className="main-heading-wrap">
-            <h1 className="heading">Conference Overview</h1>
+            <h1 className="heading text-4xl font-extrabold">Conference Overview</h1>
             <div className="divider" />
             <p
               id="w-node-_56f2b96e-ae6e-7af1-6a3b-a2d7387904db-8917cbc5"
@@ -203,7 +219,7 @@ export default function LandingPage() {
               <strong>• Participants:</strong> International students and youth delegates
             </p>
 
-            <h1 className="heading">What you get with EIMUN</h1>
+            <h1 className="heading text-4xl font-extrabold">What you get with EIMUN</h1>
             <div className="divider" />
             <div className="divider" />
             <p className="paragraph-light">
@@ -228,12 +244,16 @@ export default function LandingPage() {
             >
               <div className="w-layout-cell" />
             </div>
-            <div className="paragraph-bigger cc-bigger-light">Tashkent, Uzbekistan - May, 2026</div>
+            <div className="paragraph-bigger cc-bigger-light">
+              <span className="inline-block rounded-full bg-black px-4 py-2 text-white">
+                Tashkent, Uzbekistan - May, 2026
+              </span>
+            </div>
           </div>
 
           <section className="team-slider">
             <div className="container-2">
-              <h2 className="centered-heading">FUNDING OPTIONS</h2>
+              <h2 className="centered-heading text-4xl font-extrabold">FUNDING OPTIONS</h2>
               <div
                 data-delay="4000"
                 data-animation="slide"
@@ -266,150 +286,109 @@ export default function LandingPage() {
         </section>
 
         <div className="divider" />
-        <img
-          src="https://cdn.prod.website-files.com/697f81cd3f55ea918917cb63/69807936720ea849f553de4e_international-student-flags.jpg"
-          loading="lazy"
-          sizes="(max-width: 1200px) 100vw, 1200px"
-          srcSet="https://cdn.prod.website-files.com/697f81cd3f55ea918917cb63/69807936720ea849f553de4e_international-student-flags-p-500.jpg 500w, https://cdn.prod.website-files.com/697f81cd3f55ea918917cb63/69807936720ea849f553de4e_international-student-flags-p-800.jpg 800w, https://cdn.prod.website-files.com/697f81cd3f55ea918917cb63/69807936720ea849f553de4e_international-student-flags-p-1080.jpg 1080w, https://cdn.prod.website-files.com/697f81cd3f55ea918917cb63/69807936720ea849f553de4e_international-student-flags.jpg 1200w"
-          alt=""
-        />
-
-        <h1 className="heading">About</h1>
-        <div className="divider" />
-        <p className="paragraph-light">
-          EIMUN 2026 is an international Model United Nations conference taking place in May 2026 in
-          Tashkent, Uzbekistan. The conference focuses on Global Challenges and Sustainable
-          Development, providing a platform for youth to engage in diplomacy, debate, and
-          collaborative problem-solving. Through structured committee sessions and discussions,
-          participants will explore international issues, represent diverse perspectives, and develop
-          key skills in leadership, negotiation, and public speaking. EIMUN aims to create an academic
-          yet inclusive environment that encourages dialogue, cooperation, and global awareness among
-          young leaders.
-          <br />
-          Available spots:
-          <br />
-          -20 Fully Funded
-          <br />
-          -30 Partial Funded
-          <br />
-          -50 Self Funded
-        </p>
-
-        <h1 className="heading">Eligibility &amp; Requirements</h1>
-        <div className="divider" />
-        <p className="paragraph-light">
-          <strong>Who Can Apply?</strong>
-          <br />
-          EIMUN 2026 welcomes motivated and responsible young individuals who are interested in
-          international relations, diplomacy, and global development. To be eligible, applicants must
-          meet the following requirements:
-          <br />
-          <strong>1. Age Requirement</strong>
-          <br />
-          Applicants must be between 16 and 30 years old at the time of the conference.
-          <br />
-          <strong>2. Language Proficiency</strong>
-          <br />
-          Participants must have basic to intermediate proficiency in English, as all sessions and
-          committee discussions will be conducted in English.
-          <br />
-          <strong>3. Academic or Professional Background</strong>
-          <br />
-          Applicants can be:
-          <br />
-          • High school students
-          <br />
-          • University students
-          <br />
-          • Recent graduates
-          <br />
-          • Young professionals interested in global affairs
-          <br />
-          Previous MUN experience is not required, but is considered an advantage.
-          <br />
-          <strong>4. Commitment &amp; Professional Conduct</strong>
-          <br />
-          Participants must:
-          <br />
-          • Attend all scheduled sessions
-          <br />
-          • Respect other delegates and organizers
-          <br />
-          • Follow conference rules and local laws
-          <br />
-          • Maintain professional behavior throughout the event
-          <br />
-          <strong>5. Application &amp; Fee</strong>
-          <br />
-          All applicants must:
-          <br />
-          • Complete the official online application form
-          <br />
-          • Pay the $20 non-refundable application fee
-          <br />
-          <strong>6. Travel &amp; Documentation</strong>
-          <br />
-          International participants are responsible for:
-          <br />
-          • Valid passport
-          <br />
-          • Visa requirements (if applicable)
-          <br />
-          • Travel arrangements
-          <br />
-          Official invitation letters will be provided to accepted participants upon request.
-        </p>
-
-        <Link to="/apply" className="primary-button w-button">
-          Apply now
-        </Link>
-      </main>
-
-      <section className="section cc-subscribe-form">
-        <div className="container cc-subscription-form">
-          <div className="heading-jumbo-small"> Newsletter</div>
-          <div className="paragraph-light cc-subscribe-paragraph">Sign up to receive updates.</div>
-          <div className="form-block w-form">
-            <form
-              id="wf-form-Monthly-Newsletter-Form"
-              name="wf-form-Monthly-Newsletter-Form"
-              data-name="Monthly Newsletter Form"
-              method="get"
-              className="subscribe-form"
-              data-wf-page-id="697f81cf3f55ea918917cbc5"
-              data-wf-element-id="2df3695a-ff87-37fa-7ac7-63d4f4891940"
-            >
-              <input
-                className="text-field cc-subscribe-text-field w-input"
-                maxLength={256}
-                name="Newsletter-Email"
-                data-name="Newsletter Email"
-                placeholder="Enter your email"
-                type="email"
-                id="Newsletter-Email"
-                required
-              />
-              <input
-                type="submit"
-                data-wait="Please wait..."
-                className="primary-button w-button"
-                value="Submit"
-              />
-            </form>
-            <div className="status-message w-form-done">
-              <div>Thank you! Your submission has been received!</div>
-            </div>
-            <div className="status-message w-form-fail">
-              <div>Oops! Something went wrong while submitting the form.</div>
-            </div>
-          </div>
+        <div className="flex justify-center">
+          <img
+            className="mx-auto"
+            src="https://cdn.prod.website-files.com/697f81cd3f55ea918917cb63/69807936720ea849f553de4e_international-student-flags.jpg"
+            loading="lazy"
+            sizes="(max-width: 1200px) 100vw, 1200px"
+            srcSet="https://cdn.prod.website-files.com/697f81cd3f55ea918917cb63/69807936720ea849f553de4e_international-student-flags-p-500.jpg 500w, https://cdn.prod.website-files.com/697f81cd3f55ea918917cb63/69807936720ea849f553de4e_international-student-flags-p-800.jpg 800w, https://cdn.prod.website-files.com/697f81cd3f55ea918917cb63/69807936720ea849f553de4e_international-student-flags-p-1080.jpg 1080w, https://cdn.prod.website-files.com/697f81cd3f55ea918917cb63/69807936720ea849f553de4e_international-student-flags.jpg 1200w"
+            alt=""
+          />
         </div>
-      </section>
 
-      <p className="paragraph-2">
-        Note*: Application fee is non-refundable and it does not guarantee acceptance or any level of
-        funding. Applications without completed payment will not be reviewed.
-      </p>
+        <section className="mx-auto max-w-4xl px-6 text-center">
+          <h1 className="heading text-4xl font-extrabold">About</h1>
+          <div className="divider" />
+          <p className="paragraph-light text-center">
+            EIMUN 2026 is an international Model United Nations conference taking place in May 2026
+            in Tashkent, Uzbekistan. The conference focuses on Global Challenges and Sustainable
+            Development, providing a platform for youth to engage in diplomacy, debate, and
+            collaborative problem-solving. Through structured committee sessions and discussions,
+            participants will explore international issues, represent diverse perspectives, and
+            develop key skills in leadership, negotiation, and public speaking. EIMUN aims to create
+            an academic yet inclusive environment that encourages dialogue, cooperation, and global
+            awareness among young leaders.
+            <br />
+            Available spots:
+            <br />
+            -20 Fully Funded
+            <br />
+            -30 Partial Funded
+            <br />
+            -50 Self Funded
+          </p>
+
+          <h1 className="heading text-4xl font-extrabold">Eligibility &amp; Requirements</h1>
+          <div className="divider" />
+          <p className="paragraph-light text-center">
+            <strong>Who Can Apply?</strong>
+            <br />
+            EIMUN 2026 welcomes motivated and responsible young individuals who are interested in
+            international relations, diplomacy, and global development. To be eligible, applicants
+            must meet the following requirements:
+            <br />
+            <strong>1. Age Requirement</strong>
+            <br />
+            Applicants must be between 16 and 30 years old at the time of the conference.
+            <br />
+            <strong>2. Language Proficiency</strong>
+            <br />
+            Participants must have basic to intermediate proficiency in English, as all sessions and
+            committee discussions will be conducted in English.
+            <br />
+            <strong>3. Academic or Professional Background</strong>
+            <br />
+            Applicants can be:
+            <br />
+            • High school students
+            <br />
+            • University students
+            <br />
+            • Recent graduates
+            <br />
+            • Young professionals interested in global affairs
+            <br />
+            Previous MUN experience is not required, but is considered an advantage.
+            <br />
+            <strong>4. Commitment &amp; Professional Conduct</strong>
+            <br />
+            Participants must:
+            <br />
+            • Attend all scheduled sessions
+            <br />
+            • Respect other delegates and organizers
+            <br />
+            • Follow conference rules and local laws
+            <br />
+            • Maintain professional behavior throughout the event
+            <br />
+            <strong>5. Application &amp; Fee</strong>
+            <br />
+            All applicants must:
+            <br />
+            • Complete the official online application form
+            <br />
+            • Pay the $20 non-refundable application fee
+            <br />
+            <strong>6. Travel &amp; Documentation</strong>
+            <br />
+            International participants are responsible for:
+            <br />
+            • Valid passport
+            <br />
+            • Visa requirements (if applicable)
+            <br />
+            • Travel arrangements
+            <br />
+            Official invitation letters will be provided to accepted participants upon request.
+          </p>
+        </section>
+
+        <section id="apply-section" className="mx-auto max-w-4xl px-6 py-12">
+          <ApplyFormInner />
+        </section>
+      </main>
 
       <footer className="footer-dark">
         <div className="container-3">
@@ -430,6 +409,53 @@ export default function LandingPage() {
                 </Link>
               </div>
             </div>
+          </div>
+
+          <div className="mt-10 text-center">
+            <div className="heading-jumbo-small"> Newsletter</div>
+            <div className="paragraph-light cc-subscribe-paragraph">Sign up to receive updates.</div>
+            <div className="form-block w-form">
+              <form
+                id="wf-form-Monthly-Newsletter-Form"
+                name="wf-form-Monthly-Newsletter-Form"
+                data-name="Monthly Newsletter Form"
+                method="get"
+                className="subscribe-form"
+                data-wf-page-id="697f81cf3f55ea918917cbc5"
+                data-wf-element-id="2df3695a-ff87-37fa-7ac7-63d4f4891940"
+              >
+                <div className="mx-auto flex max-w-md justify-center">
+                  <input
+                    className="w-full rounded-l-full border border-white/20 bg-black/20 px-4 py-3 text-sm text-white outline-none"
+                    maxLength={256}
+                    name="Newsletter-Email"
+                    data-name="Newsletter Email"
+                    placeholder="Enter your email"
+                    type="email"
+                    id="Newsletter-Email"
+                    required
+                  />
+                  <button
+                    type="submit"
+                    data-wait="Please wait..."
+                    className="rounded-r-full bg-white px-6 py-3 text-sm font-semibold text-black"
+                  >
+                    Submit
+                  </button>
+                </div>
+              </form>
+              <div className="status-message w-form-done">
+                <div>Thank you! Your submission has been received!</div>
+              </div>
+              <div className="status-message w-form-fail">
+                <div>Oops! Something went wrong while submitting the form.</div>
+              </div>
+            </div>
+
+            <p className="paragraph-2 mt-8 text-center">
+              Note*: Application fee is non-refundable and it does not guarantee acceptance or any
+              level of funding. Applications without completed payment will not be reviewed.
+            </p>
           </div>
         </div>
         <div className="footer-divider" />
