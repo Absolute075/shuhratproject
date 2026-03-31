@@ -1,4 +1,4 @@
-import { type MouseEvent, useEffect } from 'react'
+import { type MouseEvent, useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { ApplyFormInner } from './App'
 
@@ -106,11 +106,11 @@ function ApplyNowArrowLink() {
 
 function FundingSlide({ option }: { option: FundingOption }) {
   return (
-    <article className="min-w-[280px] snap-center overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-sm md:min-w-0">
+    <article className="w-full shrink-0 snap-start overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-sm md:min-w-0">
       <img
         src={option.image.src}
         loading="lazy"
-        sizes="(max-width: 768px) 280px, (max-width: 1200px) 33vw, 360px"
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 360px"
         srcSet={option.image.srcSet}
         alt=""
         className="h-56 w-full object-cover"
@@ -143,6 +143,8 @@ function FundingSlide({ option }: { option: FundingOption }) {
 
 export default function LandingPage() {
   const location = useLocation()
+  const fundingScrollRef = useRef<HTMLDivElement | null>(null)
+  const [activeFundingIndex, setActiveFundingIndex] = useState(0)
 
   useEffect(() => {
     const params = new URLSearchParams(location.search)
@@ -160,6 +162,26 @@ export default function LandingPage() {
 
     return () => window.clearTimeout(t)
   }, [location.hash, location.pathname, location.search])
+
+  function handleFundingScroll() {
+    const container = fundingScrollRef.current
+    if (!container) return
+
+    const nextIndex = Math.round(container.scrollLeft / Math.max(container.clientWidth, 1))
+    const safeIndex = Math.min(Math.max(nextIndex, 0), FUNDING_OPTIONS.length - 1)
+    setActiveFundingIndex(safeIndex)
+  }
+
+  function scrollToFundingCard(index: number) {
+    const container = fundingScrollRef.current
+    if (!container) return
+
+    container.scrollTo({
+      left: container.clientWidth * index,
+      behavior: 'smooth',
+    })
+    setActiveFundingIndex(index)
+  }
 
   return (
     <div>
@@ -253,9 +275,28 @@ export default function LandingPage() {
           <section className="team-slider">
             <div className="container-2">
               <h2 className="centered-heading text-4xl font-extrabold">FUNDING OPTIONS</h2>
-              <div className="mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto pb-4 md:grid md:grid-cols-3 md:gap-8 md:overflow-visible md:pb-0">
+              <div
+                ref={fundingScrollRef}
+                onScroll={handleFundingScroll}
+                className="mt-10 flex snap-x snap-mandatory overflow-x-auto pb-4 scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden md:grid md:grid-cols-3 md:gap-8 md:overflow-visible md:pb-0"
+              >
                 {FUNDING_OPTIONS.map((option) => (
                   <FundingSlide key={option.title} option={option} />
+                ))}
+              </div>
+              <div className="mt-4 flex items-center justify-center gap-2 md:hidden">
+                {FUNDING_OPTIONS.map((option, index) => (
+                  <button
+                    key={option.title}
+                    type="button"
+                    aria-label={`Go to ${option.title}`}
+                    onClick={() => scrollToFundingCard(index)}
+                    className={
+                      activeFundingIndex === index
+                        ? 'h-2.5 w-2.5 rounded-full bg-black transition-colors duration-200'
+                        : 'h-2.5 w-2.5 rounded-full bg-slate-300 transition-colors duration-200'
+                    }
+                  />
                 ))}
               </div>
             </div>
