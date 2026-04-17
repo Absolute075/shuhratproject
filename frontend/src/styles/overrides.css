@@ -1,0 +1,20 @@
+.w-slider-mask {
+  position: relative;
+}
+
+.pp-slider {
+  position: relative;
+  width: 100%;
+}
+
+.pp-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 500ms ease;
+}
+
+.pp-slide.is-active {
+  opacity: 1;
+  position: relative;
+}
